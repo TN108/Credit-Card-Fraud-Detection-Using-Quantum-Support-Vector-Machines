@@ -95,7 +95,7 @@ Classical ML models face critical challenges in fraud detection:
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/QSVM-Credit-Card-Fraud-Detection.git
+git clone https://github.com/TN108/Credit-Card-Fraud-Detection-Using-Quantum-Support-Vector-Machines.git
 cd QSVM-Credit-Card-Fraud-Detection
 ```
 
@@ -119,68 +119,112 @@ pip install -r requirements.txt
 
 **requirements.txt:**
 ```
+# Quantum Computing
 qiskit>=0.45.0
 qiskit-aer>=0.13.0
 qiskit-machine-learning>=0.7.0
+
+# Machine Learning
 scikit-learn>=1.3.0
+imbalanced-learn>=0.11.0
+
+# Data Processing
 numpy>=1.24.0
 pandas>=2.0.0
+
+# Visualization
 matplotlib>=3.7.0
 seaborn>=0.12.0
-imbalanced-learn>=0.11.0
+
+# Dataset
 tensorflow>=2.13.0
+
+# Jupyter
 jupyter>=1.0.0
+ipykernel>=6.25.0
+ipywidgets>=8.1.0
 ```
 
 ### 4. Download Dataset
 
-The TensorFlow Credit Card Fraud Dataset will be automatically downloaded on first run, or manually:
+The dataset will be automatically downloaded when you run the notebook. Alternatively, download manually:
 
+```python
+# In the notebook or Python script:
+import tensorflow as tf
+
+# Download credit card fraud dataset
+dataset = tf.keras.utils.get_file(
+    "creditcard.csv",
+    "https://storage.googleapis.com/download.tensorflow.org/data/creditcard.csv"
+)
+```
+
+Or download from [Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud):
 ```bash
-python scripts/download_data.py
+# Using Kaggle API
+kaggle datasets download -d mlg-ulb/creditcardfraud
+unzip creditcardfraud.zip -d data/
 ```
 
 ## 🚀 Quick Start
 
-### 1. Run Complete Pipeline
+### Option 1: Run Main Notebook (Recommended)
 
 ```bash
-python main.py --qubits 10 --feature_map efficientsu2
+# Start Jupyter
+jupyter notebook
+
+# Open QSVM_Fraud_Detection.ipynb and run all cells
+# This notebook contains the complete pipeline:
+# 1. Data loading and preprocessing
+# 2. Classical SVM baseline
+# 3. Quantum feature map experiments
+# 4. Results visualization
 ```
 
-### 2. Train Classical Baseline
+### Option 2: Run Individual Notebooks
 
 ```bash
-python train_classical.py --kernel rbf
+# Navigate to notebooks directory
+cd notebooks/
+
+# Start Jupyter
+jupyter notebook
+
+# Run notebooks in sequence:
+# 1. 01_data_exploration.ipynb       - Dataset analysis
+# 2. 02_classical_baseline.ipynb     - Classical SVM experiments  
+# 3. 03_quantum_kernels.ipynb        - Quantum kernel evaluation
+# 4. 04_results_visualization.ipynb  - Performance comparison
 ```
 
-### 3. Train Quantum Models
+### Option 3: Google Colab
 
-```bash
-# Single feature map
-python train_quantum.py --qubits 8 --feature_map zz
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yourusername/QSVM-Credit-Card-Fraud-Detection/blob/main/notebooks/QSVM_Fraud_Detection.ipynb)
 
-# All feature maps
-python train_quantum.py --qubits 10 --all_maps
+```python
+# In Colab, run this first cell:
+!pip install qiskit qiskit-aer qiskit-machine-learning imbalanced-learn
+
+# Then run the notebook cells sequentially
 ```
 
-### 4. Hybrid Approach
+### Key Notebook Sections
 
-```bash
-python train_hybrid.py --qubits 10 --feature_map efficientsu2
-```
+**QSVM_Fraud_Detection.ipynb** contains:
 
-### 5. Run Jupyter Notebooks
-
-```bash
-jupyter notebook notebooks/
-```
-
-Available notebooks:
-- `01_data_exploration.ipynb` - Dataset analysis and visualization
-- `02_classical_baseline.ipynb` - Classical SVM experiments
-- `03_quantum_feature_maps.ipynb` - Quantum kernel evaluation
-- `04_results_analysis.ipynb` - Performance comparison and visualization
+1. **Setup & Imports** - Install dependencies and import libraries
+2. **Data Loading** - Load TensorFlow credit card dataset
+3. **EDA** - Visualize class imbalance and feature distributions
+4. **Preprocessing** - RobustScaler, PCA, SMOTE, RandomUnderSampler
+5. **Classical Baseline** - Train SVM with RBF, Polynomial, Linear kernels
+6. **Quantum Feature Maps** - Implement ZZ, Pauli, EfficientSU2, Custom Dense, High Entangling
+7. **Quantum Kernels** - Compute kernel matrices using AER simulator
+8. **QSVM Training** - Train quantum SVMs for 4, 6, 8, 10 qubits
+9. **Hybrid Models** - Quantum kernels + Classical RBF SVM
+10. **Results & Visualization** - Compare all models, plot metrics
+11. **Best Model Analysis** - Detailed evaluation of EfficientSU2 (10 qubits)
 
 ## 📊 Results
 
@@ -221,6 +265,7 @@ Actual Fraud    14      1      (93.3% Recall)
 True Positives: 14 | False Positives: 9
 False Negatives: 1 | True Negatives: 36
 ```
+
 
 
 ## 🔬 Theory
@@ -323,12 +368,44 @@ K_test[i,j] = K(x_i, x_j)   where x_i ∈ X_test, x_j ∈ X_train
 We welcome contributions! Areas for improvement:
 
 1. **New Feature Maps**: Design novel quantum circuits for fraud detection
-2. **Optimization**: Improve quantum circuit efficiency
-3. **Benchmarking**: Add comparisons with other QML approaches
-4. **Documentation**: Enhance code documentation and tutorials
-5. **Testing**: Expand test coverage
+2. **Optimization**: Improve quantum circuit efficiency and reduce runtime
+3. **Benchmarking**: Add comparisons with other QML approaches (VQC, QNN)
+4. **Documentation**: Enhance notebook documentation and add tutorials
+5. **Experiments**: Test on different datasets or imbalance ratios
 
+### How to Contribute
 
+```bash
+# Fork the repository
+git clone https://github.com/TN108/Credit-Card-Fraud-Detection-Using-Quantum-Support-Vector-Machines.git
+cd QSVM-Credit-Card-Fraud-Detection
+
+# Create a feature branch
+git checkout -b feature/amazing-feature
+
+# Make changes to notebooks or add new ones
+# Ensure all cells run without errors
+
+# Commit your changes
+git commit -m "Add amazing feature"
+
+# Push to your fork
+git push origin feature/amazing-feature
+
+# Open a Pull Request
+```
+
+### Contribution Guidelines
+
+- Ensure all notebook cells execute successfully
+- Add markdown documentation for new sections
+- Include visualizations for results
+- Update requirements.txt if adding new dependencies
+- Follow PEP 8 style guidelines for Python code
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Authors
 
@@ -383,8 +460,6 @@ Special thanks to:
 - **LUMS SBASSE** for computational resources and support
 
 
-
----
 
 <div align="center">
 
