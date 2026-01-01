@@ -431,7 +431,7 @@ If you use this work in your research, please cite:
   title={Credit Card Fraud Detection Using Quantum Support Vector Machines},
   author={Arshad, Rida and Shahid, Nawal and Nasir, Talha},
   institution={Lahore University of Management Sciences},
-  year={2024},
+  year={2025},
   type={Technical Report}
 }
 ```
